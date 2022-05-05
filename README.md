@@ -1,8 +1,111 @@
 # Sorting-Algorithm
 
 
-6가지 각 알고리즘에 대해 정방향 데이터 / 역방향 데이터 / 랜덤 데이터 를 정렬할때 , 
-3가지 경우를 비교해본다.
+6가지의 정렬 알고리즘에 대해서 각각 간단한 개념을 이야기 한 후,<br>
+정방향 데이터 / 역방향 데이터 / 랜덤 데이터 3가지 경우에 대해서 수행시간을 비교해 볼 것이다. <br>
+그리고 마지막으로 데이터가 랜덤으로 주어지는 경우 6가지 알고리즘의 수행시간을 그래프를 통해 비교해 볼 것이다.<br>
+
+데이터 개수에 따른 각 정렬 알고리즘의 수행시간을 측정한 주요코드는 다음과 같다.<br>
+(수 많은 블로그와 깃허브 , 인터넷 정보들을 참고하였다. )
+```c
+#define MAX_SIZE 32 //데이터의 개수 지정
+#define SWAP(x,y,t) ((t)=(x), (x)=(y), (y)=(t))    
+int original[MAX_SIZE];    //랜덤함수로 만든 데이터를 저장할 원본 배열
+int list[MAX_SIZE];    //각 정렬 알고리즘에서 사용할 데이터 배열
+int n; //데이터의 개수를 받는 전역변수 설정
+clock_t start, finish, used_time=0;    //실행 시간 측정을 위한 변수
+```
+MAX_SIZE 의 값을 수정하면서 데이터의 개수를 계속 변경해 줄 수 있다.<br>
+그 후 , 6가지 정렬 알고리즘을 구현해주고 ( 이 코드는 생략한다 / 밑에 장에서 작성하긴 할 것이다.) <br>
+
+```c
+//실행 시간을 측정 및 출력
+void CalcTime(void)
+{
+    used_time=finish-start;
+    printf("완료 소요 시간은 %f sec\n \n ",(float)used_time/CLOCKS_PER_SEC);
+}
+```
+각 정렬 알고리즘의 수행시간을 측정하여 나타내 주는 함수를 작성한다.
+
+```c
+void main ()
+{
+    int i;
+    
+    n=MAX_SIZE;
+    for(i=0; i<n; i++)
+        original[i]=rand();
+    
+    printf("데이터의 개수 : %d\n\n", n);
+ 
+    CopyArr();
+    start=clock();
+    selection_sort(list, n);
+    finish=clock();
+    CalcTime();
+    
+    CopyArr();
+    start=clock();
+    insertion_sort(list, n);
+    finish=clock();
+    CalcTime();
+ 
+    CopyArr();
+    start=clock();
+    bubble_sort(list, n);
+    finish=clock();
+    CalcTime();
+ 
+    CopyArr();
+    start=clock();
+    shell_sort(list, n);
+    finish=clock();
+    CalcTime();
+ 
+    CopyArr();
+    start=clock();
+    printf("합병 정렬 중... ");
+    merge_sort(list, 0, n);
+    finish=clock();
+    CalcTime();
+ 
+    CopyArr();
+    start=clock();
+    printf("퀵 정렬 중... ");
+    quick_sort(list, 0, n);
+    finish=clock();
+    CalcTime();
+}
+```
+그 후 정렬 알고리즘을 수행 후 , 수행시간 측정 함수를 호출하는 main 문을 작성한다.<br>
+
+![컴파일 결과](https://user-images.githubusercontent.com/101388379/166856559-8af7885c-2402-433e-b01e-ceadbfcde24e.PNG)
+
+위에 보이는 것처럼
+이 함수를 통해 우리는 데이터 수를 입력하면 , 그 수를 처리하는데 걸리는 정렬 알고리즘들의 수행 시간을 알 수 있다.
+이를 통해 역방향 데이터 / 정방향 데이터 / 랜덤 데이터 / 3가지 경우에 대해서도 알고리즘들의 수행시간을 알아볼 것이다.
+<br>
+위 함수는 랜덤으로 데이터가 생성되는 경우이다.<br>
+
+만약 역방향 데이터를 정렬하려면 어떻게 해야할까? <br>
+랜덤으로 생성된 데이터를 역방향으로 정렬 후 , 다시 정렬 알고리즘에 넣어주면 된다.<br>
+그러므로 아래와 같이 MAX_SIZE 만큼의 데이터들을 역순배열 해주는 함수를 추가한다.
+```c
+void reverseArraylnt(int* array, int size) {
+  int temp;
+
+  for(int i = 0; i<MAX_SIZE / 2; i++) {
+    temp = array[i];
+    array[i] = array[(MAX_SIZE - 1) - i];
+    array[(MAX_SIZE - 1) - i] = temp;
+  }
+  ```
+  정렬된 데이터의 경우에는 , 우리가 공부하고 있는 정렬알고리즘이 결국 오름차순으로 정렬 하는 것이므로<br>
+  6가지의 정렬 중 , 하나를 골라서 MAX_SIZE 수 만큼의 데이터들을 정렬 해 준 다음에 정렬된 배열을 한번 더 정렬 알고리즘으로 돌린다고 생각했다.
+  
+  이제 우리는 코드를 통해 랜덤 데이터 , 역정렬 데이터 , 정렬 데이터 3가지 경우에 수행 시간을 구하는 방법을 알았다. 이제 본격적으로 값을 측정하고 그래프를 그려보자. 데이터의 입력 수는 2의 5승부터 2의 20승까지로 지정해놓았다.
+
 
 ## 선택정렬
 
@@ -44,7 +147,6 @@ void selection_sort(int list[], int n){
     }
   }
 }```
-이 코드는 선택 정렬의 기본이 되는 코드이다. <br>
 
 void main(){
   int i;
@@ -60,6 +162,11 @@ void main(){
   }
 }
 ```
+이제 맨 처음에 소개한 알고리즘을 통해 랜덤데이터  , 역정렬 데이터 , 정렬 데이터의 소요시간을 살펴보고 선택정렬은 어느 경우에 가장 유리할지 살펴보자.
+
+![선택정렬 그래프](https://user-images.githubusercontent.com/101388379/166864239-a2688e76-07f5-48da-baef-341464543cb3.PNG)
+
+
 ---
 
 ## 삽입정렬
