@@ -192,9 +192,9 @@ void shell_sort(int list[], int n){
       gap++; // gap을 홀수로 만든다.
     )
 
-    // 부분 리스트의 개수는 gap과 같다.
+    
     for(i=0; i<gap; i++){
-      // 부분 리스트에 대한 삽입 정렬 수행
+     
       inc_insertion_sort(list, i, n-1, gap);
     }
   }
@@ -217,4 +217,80 @@ void main(){
 ---
 
 ## 합병 정렬
+
+---
+
 ## 퀵 정렬
+
+### 퀵 정렬 알고리즘 기본 개념
+**●다른 원소와의 비교만으로 정렬을 수행하는 비교 정렬 알고리즘**<br>
+**●분할 정복 알고리즘의 하나로 , 평균적으로 매우 빠른 수행 속도**
+
+**●과정**
+1. 리스트 안에 있는 한 요소를 선택. (고른 원소를 '피벗(pivot)'이라고 한다.)
+2. 피벗을 기준으로 피벗보다 작은 요소들은 모두 피벗의 왼쪽으로 , 큰 요소들은 오른쪽으로 이동
+3. 피벗을 제외한 왼쪽 리스트와 오른쪽 리스트를 다시 정렬.
+4. 부분 리스트들이 더 이상 분할이 안될때까지 반복.
+
+
+**●그림으로 보는 퀵 정렬 알고리즘 기본 예제**<br>
+
+![퀵 정렬](https://user-images.githubusercontent.com/101388379/166854439-0c3b2b72-3c39-4ad6-ac02-c2f0267eb071.PNG)
+
+**●퀵정렬 알고리즘 기본 코드**
+```c
+int partition(int list[], int left, int right){
+  int pivot, temp;
+  int low, high;
+
+  low = left;
+  high = right + 1;
+  pivot = list[left]; 
+
+  do{
+   
+    do {
+      low++; 
+    } while (low<=right && list[low]<pivot);
+
+   do {
+      high--; //high는 right 에서 시작
+    } while (high>=left && list[high]>pivot);
+
+   if(low<high){
+      SWAP(list[low], list[high], temp);
+    }
+  } while (low<high);
+
+  SWAP(list[left], list[high], temp);
+
+  return high;
+}
+
+void quick_sort(int list[], int left, int right){
+
+  if(left<right){
+   
+    int q = partition(list, left, right); // q: 피벗의 위치
+
+    quick_sort(list, left, q-1); 
+    quick_sort(list, q+1, right); 
+  }
+
+}
+
+void main(){
+  int i;
+  int n = MAX_SIZE;
+  int list[n] = {5, 3, 8, 4, 9, 1, 6, 2, 7};
+
+  // 퀵 정렬 수행(left: 배열의 시작 = 0, right: 배열의 끝 = 8)
+  quick_sort(list, 0, n-1);
+
+  // 정렬 결과 출력
+  for(i=0; i<n; i++){
+    printf("%d\n", list[i]);
+  }
+}
+```
+
