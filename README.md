@@ -128,38 +128,18 @@ void reverseArraylnt(int* array, int size) {
 
 **● 선택정렬 기본코드**
 ```c
-
-void selection_sort(int list[], int n){
-  int i, j, least, temp;
-
-  for(i=0; i<n-1; i++){
-    least = i;
-
- 
-    for(j=i+1; j<n; j++){
-      if(list[j]<list[least])
-        least = j;
+void selection_sort(int list[], int n)
+{
+    int i,j,least,tmp;
+    
+    printf("선택 정렬 중... ");
+    for(i=0; i<n-1; i++)
+    {
+        least=i;
+        for(j=i+1; j<n; j++)
+            if(list[j]<list[least]) least=j;
+        SWAP(list[i], list[least], tmp);
     }
-
-   
-    if(i != least){
-        SWAP(list[i], list[least], temp);
-    }
-  }
-}```
-
-void main(){
-  int i;
-  int n = MAX_SIZE;
-  int list[n] = {9, 6, 7, 3, 5};
-
-  // 선택 정렬 수행
-  selection_sort(list, n);
-
-  // 정렬 결과 출력
-  for(i=0; i<n; i++){
-    printf("%d\n", list[i]);
-  }
 }
 ```
 선택정렬은 어느 상황에서 가장 적합할까? 첫 장의 코드를 사용하여 랜덤 데이터 , 역정렬 데이터 , 정렬 데이터의 경우에 따라 선택정렬 알고리즘의 속도를 측정하여 그래프로 나타내보았다.
@@ -167,7 +147,7 @@ void main(){
 ![선택정렬 그래프](https://user-images.githubusercontent.com/101388379/166864239-a2688e76-07f5-48da-baef-341464543cb3.PNG)
 직접 값을 넣으면서 측정해본 결과 , 선택정렬은 역정렬 데이터가 주어질 경우에 가장 빠르고 , 정렬 데이터가 주어졌을때 가장 느리다는 것을 확인 할 수 있다.<br>
 
-**따라서 선택정렬은 역정렬 데이터가 주어질때 , 가장 효율적이다.**
+**따라서 선택정렬은 역정렬 데이터가 주어질때 , 가장 효율적이다.(best)**
 
 ---
 
@@ -183,33 +163,17 @@ void main(){
 
 **●삽입정렬 기본 코드** 
 ```c
-
-void insertion_sort(int list[], int n){
-  int i, j, key;
-
-  for(i=1; i<n; i++){
-    key = list[i]; 
-
-    for(j=i-1; j>=0 && list[j]>key; j--){
-      list[j+1] = list[j]; // 레코드의 오른쪽으로 이동
+void insertion_sort(int list[], int n)
+{
+    int i, j, key;
+    printf("삽입 정렬 중... ");
+    for(i=1; i<n; i++)
+    {
+        key=list[i];
+        for(j=i-1; j>=0 && list[j]>key; j--)
+            list[j+1]=list[j];
+        list[j+1]=key;
     }
-
-    list[j+1] = key;
-  }
-}
-
-void main(){
-  int i;
-  int n = MAX_SIZE;
-  int list[n] = {8, 5, 6, 2, 4};
-
-  // 삽입 정렬 수행
-  insertion_sort(list, n);
-
-  // 정렬 결과 출력
-  for(i=0; i<n; i++){
-    printf("%d\n", list[i]);
-  }
 }
 ```
 
@@ -220,7 +184,7 @@ void main(){
 삽입정렬은 정렬 데이터가 주어졌을때 가장 속도가 빠르며 , 역정렬 데이터가 주어지면 가장 느린 속도를 보이는 것을 알 수 있다.
 <br>
 
-**따라서 삽입정렬은 정렬된 데이터가 주어졌을때 , 효율적이다.**
+**따라서 삽입정렬은 정렬된 데이터가 주어졌을때 , 효율적이다.(best)**
 
 ---
 
@@ -235,35 +199,16 @@ void main(){
 
 **●버블정렬 알고리즘 기본 코드**
 ```c
-// 버블 정렬
-void bubble_sort(int list[], int n){
-  int i, j, temp;
-
-  for(i=n-1; i>0; i--){
-    
-    for(j=0; j<i; j++){
-      
-      if(list[j]<list[j+1]){
-        temp = list[j];
-        list[j] = list[j+1];
-        list[j+1] = temp;
-      }
+void bubble_sort(int list[], int n)
+{
+    int i, j, tmp;
+    printf("버블 정렬 중... ");
+    for(i=n-1; i>0; i--)
+    {
+        for(j=0; j<i; j++)
+            if(list[j]>list[j+1])
+                SWAP(list[j], list[j+1], tmp);
     }
-  }
-}
-
-void main(){
-  int i;
-  int n = MAX_SIZE;
-  int list[n] = {7, 4, 5, 1, 3};
-
-  // 버블 정렬 수행
-  bubble_sort(list, n);
-
-  // 정렬 결과 출력
-  for(i=0; i<n; i++){
-    printf("%d\n", list[i]);
-  }
 }
 ```
 버블정렬은 어느 상황에서 가장 적합할까? 첫 장의 코드를 사용하여 랜덤 데이터 , 역정렬 데이터 , 정렬 데이터의 경우에 따라 버블정렬 알고리즘의 속도를 측정하여 그래프로 나타내보았다.
@@ -273,7 +218,7 @@ void main(){
 
 버블 정렬은 구현은 쉬우나 워낙 속도가 느린 알고리즘이다. 그래프에서 3개의 값이 거의 일치하는 듯 하지만 정방향 데이터가 주어질때 , 속도가 가장 빠르다는 것을 확인 할 수 있다. 하지만 랜덤 데이터가 어떻게 생성되고 정렬되느냐에 따라서 바뀔 수 있을 것 같다.<br>
 
-**따라서 버블정렬은 정렬된 데이터가 주어질때 , 가장 효율적이다.**
+**따라서 버블정렬은 정렬된 데이터가 주어질때 , 가장 효율적이다.(best)**
 
 ---
  
@@ -293,52 +238,27 @@ void main(){
 
 **●쉘 정렬 알고리즘 기본 코드**
 ```c
-void inc_insertion_sort(int list[], int first, int last, int gap){
-  int i, j, key;
-
-  for(i=first+gap; i<=last; i=i+gap){
-    key = list[i]; // 현재 삽입될 숫자인 i번째 정수를 key 변수로 복사
-
-    // 현재 정렬된 배열은 i-gap까지이므로 i-gap번째부터 역순으로 조사한다.
-    // j 값은 first 이상이어야 하고
-    // key 값보다 정렬된 배열에 있는 값이 크면 j번째를 j+gap번째로 이동
-    for(j=i-gap; j>=first && list[j]>key; j=j-gap){
-      list[j+gap] = list[j]; // 레코드를 gap만큼 오른쪽으로 이동
+void inc_insertion_sort(int list[], int first, int last, int gap)
+{
+    int i, j, key;
+    for(i=first+gap; i<=last; i=i+gap)
+    {
+        key=list[i];
+        for(j=i-gap; j>=first && key<list[j]; j=j-gap)
+            list[j+gap]=list[j];
+        list[j+gap]=key;
     }
-
-    list[j+gap] = key;
-  }
 }
-
-// 셸 정렬
-void shell_sort(int list[], int n){
-  int i, gap;
-
-  for(gap=n/2; gap>0; gap=gap/2){
-    if((gap%2) == 0)(
-      gap++; // gap을 홀수로 만든다.
-    )
-
-    
-    for(i=0; i<gap; i++){
-     
-      inc_insertion_sort(list, i, n-1, gap);
+void shell_sort(int list[], int n)
+{
+    int i, gap;
+    printf("쉘 정렬 중... ");
+    for(gap=n/2; gap>0; gap=gap/2)
+    {
+        if((gap%2)==0) gap++;
+        for(i=0; i<gap; i++)
+            inc_insertion_sort(list, i, n-1, gap);
     }
-  }
-}
-
-void main(){
-  int i;
-  int n = MAX_SIZE;
-  int list[n] = {10, 8, 6, 20, 4, 3, 22, 1, 0, 15, 16};
-
-  // 셸 정렬 수행
-  shell_sort(list, n);
-
-  // 정렬 결과 출력
-  for(i=0; i<n; i++){
-    printf("%d\n", list[i]);
-  }
 }
 ```
 쉘정렬은 어느 상황에서 가장 적합할까? 첫 장의 코드를 사용하여 랜덤 데이터 , 역정렬 데이터 , 정렬 데이터의 경우에 따라 쉘정렬 알고리즘의 속도를 측정하여 그래프로 나타내보았다.
@@ -347,7 +267,7 @@ void main(){
 
 쉘정렬은 삽입정렬을 보완하는 정렬 알고리즘이다. 즉 삽입정렬에서 파생되었다고 할 수 있다. 그래서 그런지 위에서 확인한 삽입정렬과 마찬가지로 정렬 데이터가 주어질 때 가장 빠른 속도를 보이며 , 역정렬 데이터가 주어질 때 가장 느린 속도를 보이는 것을 확인 할 수가 있다. <br>
 
-**따라서 쉘 정렬은 정렬된 데이터가 주어질 때, 가장 효율적이다.**
+**따라서 쉘 정렬은 정렬된 데이터가 주어질 때, 가장 효율적이다.(best)**
 
 ---
 
@@ -370,59 +290,34 @@ void main(){
 
 **●퀵정렬 알고리즘 기본 코드**
 ```c
-int partition(int list[], int left, int right){
-  int pivot, temp;
-  int low, high;
-
-  low = left;
-  high = right + 1;
-  pivot = list[left]; 
-
-  do{
-   
-    do {
-      low++; 
-    } while (low<=right && list[low]<pivot);
-
-   do {
-      high--; //high는 right 에서 시작
-    } while (high>=left && list[high]>pivot);
-
-   if(low<high){
-      SWAP(list[low], list[high], temp);
+int partition(int list[], int left, int right)
+{
+    int pivot=list[left], tmp, low=left, high=right+1;
+ 
+    do{
+        do
+        low++;
+        while(low<=right && list[low]<pivot);
+ 
+        do
+        high--;
+        while(high>=left && list[high]>pivot);
+        if(low<high) SWAP(list[low], list[high], tmp);
+    }while(low<high);
+ 
+    SWAP(list[left], list[high], tmp);
+    return high;
+}
+void quick_sort(int list[], int left, int right)
+{
+    if(left<right)
+    {
+        int q=partition(list, left, right);
+        quick_sort(list, left, q-1);
+        quick_sort(list, q+1, right);
     }
-  } while (low<high);
-
-  SWAP(list[left], list[high], temp);
-
-  return high;
 }
 
-void quick_sort(int list[], int left, int right){
-
-  if(left<right){
-   
-    int q = partition(list, left, right); // q: 피벗의 위치
-
-    quick_sort(list, left, q-1); 
-    quick_sort(list, q+1, right); 
-  }
-
-}
-
-void main(){
-  int i;
-  int n = MAX_SIZE;
-  int list[n] = {5, 3, 8, 4, 9, 1, 6, 2, 7};
-
-  // 퀵 정렬 수행(left: 배열의 시작 = 0, right: 배열의 끝 = 8)
-  quick_sort(list, 0, n-1);
-
-  // 정렬 결과 출력
-  for(i=0; i<n; i++){
-    printf("%d\n", list[i]);
-  }
-}
 ```
 
 퀵정렬은 어느 상황에서 가장 적합할까? 첫 장의 코드를 사용하여 랜덤 데이터 , 역정렬 데이터 , 정렬 데이터의 경우에 따라 퀵정렬 알고리즘의 속도를 측정하여 그래프로 나타내보았다.
@@ -431,6 +326,17 @@ void main(){
 
 퀵 정렬 같은경우는 매우 빠른 속도로 많이 사용하는 알고리즘이다. 그런데 랜덤 데이터가 주어졌을때와 역정렬 , 정렬 데이터가 주어졌을때랑 속도차이가 꽤 나는 편이다. 퀵 정렬의 경우에는 기준값을 어떻게 잡느냐에 따라 수행 속도가 달라지는데 , 가장 이상적인 경우가 난수에 의해 기준값을 잡는 것이기 때문이다.
 
-**따라서 퀵 정렬은 랜덤 데이터가 주어졌을때 , 가장 효율적이다. **
+**따라서 퀵 정렬은 랜덤 데이터가 주어졌을때 , 가장 효율적이다.(best)**
 
+---
+
+## 랜덤 데이터가 주어질때 , 가장 효율적인 알고리즘은?
+
+위에서는 정렬된 데이터 , 역정렬된 데이터 , 랜덤 데이터를 가지고 비교하며 수행 속도를 알아보고 그래프로 나타내봤다.<br>
+우리는 데이터의 수를 32(2의 5승)부터 1048576(2의 20승)까지 설정하고 속도를 측정하였는데 , 만약 실제로
+1048576개의 데이터들이 주어졌는데 , 이것이 정렬되거나 역정렬되서 주어지는 경우가 있을까? 실제로 데이터의 개수가 100000개만 넘어가도 데이터가 정렬되거나 역정렬 되어있는 경우는 거의 없다고 한다. 그렇다면 랜덤 데이터가 주어졌을때 , 수행 속도가 가장 빠른 알고리즘이 결국 제일 효율적이고 널리 쓰이는 알고리즘이 아닐까? 그래서 한번 랜덤 데이터가 주어진 상황에서 5개의 알고리즘의 속도를 한번 비교해보고자 그래프를 나타내보았다.
+
+![랜덤 데이터 비교값](https://user-images.githubusercontent.com/101388379/166877592-02a12f91-3863-453c-b4f9-f69894e49b7b.PNG)
+
+![비교](https://user-images.githubusercontent.com/101388379/166878774-699c96e4-1a0e-460b-bd46-cd575f5ee1ac.PNG)
 
